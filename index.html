@@ -7,7 +7,45 @@
         <title>Final assignment JavaScript</title>
     </head>
     <body>
-        <script src="js/index.js"></script>
+        <section id="fond">
+            <div id="container"> 
+                <p>Text for searching images:</p>
+                <input id="search_input" type="text">
+                <div>
+                    <div class="image_number">
+                        <p>Number of images per page:</p>
+                        <select id="amount">
+                            <option selected value="20">20</option>
+                            <option value="40">40</option>
+                            <option value="60">60</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                    <div class="image_size">
+                        <p>Image size:</p>
+                        <select id="sizes">
+                            <option value="n">320</option>
+                            <option value="z">640</option>
+                            <option value="c">800</option>
+                            <option selected value="b">1024</option> 
+                            <option value="h">1600</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="search_btn">Search</button>
+            </div>
+        </section>
+        <section class="images">
+
+        </section>
+        <section id="down">
+            <button id="get_more_btn">Get more</button>
+            <button id="back">Back to search</button>
+        </section>
+        <div id="lightbox">
+
+        </div>
+        <script src="js/index.js"></script> 
     </body>
 </html>
 
