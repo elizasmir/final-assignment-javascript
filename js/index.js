@@ -1,36 +1,12 @@
-const API_KEY = "19d3e6e0acfe9c438f368e2c2bab1c5d";
-
-photosURL = [];
-page = 1;
-
-function searchPhotos() {
-    searchText = document.getElementById("search_input").value;
-    amountPhoto = document.getElementById("amount").value;
-    const API_URL = `https://api.flickr.com/services/rest/` +
-                    `?method=flickr.photos.search&api_key=${API_KEY}` +
-                    `&text=${searchText}&content_type=1&per_page=${amountPhoto}` +
-                    `&page=${page}&format=json&nojsoncallback=1`;
-    return fetch(API_URL).then(response => response.json())
-            .then(response => {
-                page = response.photos.page + 1;
-                return response.photos.photo;
-            })
-            .catch(error => console.log(error));
-}
-
-function getPhotoURL(photo, size) {
-    const url = `http://farm${photo.farm}.staticflickr.com/` +
-                `${photo.server}/${photo.id}_${photo.secret}_${size}.jpg`;
-    return url
-}
+import { getPhotoURL, searchPhotos } from "./flickr.js"
 
 function showPhotos(photos, divBlock) {
-    photoSize = document.getElementById("sizes").value;
+    const photoSize = document.getElementById("sizes").value;
     if (typeof photos === undefined) {
         console.log("Sorry, there is a problem try again!");
         return
     }
-        
+
     photos.forEach(photo => {
         divBlock.innerHTML += `<img src='${getPhotoURL(photo, photoSize)}'>`;
     });
@@ -62,24 +38,28 @@ function handleLightbox() {
     })
 }
 
-document.getElementById("search_btn").addEventListener("click", function() {
-    divBlock = document.getElementsByClassName("images")[0];
+document.getElementById("search_btn").addEventListener("click", function () {
+    const divBlock = document.getElementsByClassName("images")[0];
     divBlock.innerHTML = "";
+    const searchText = document.getElementById("search_input").value;
+    const amountPhoto = document.getElementById("amount").value;
 
-    searchPhotos().then(photos => { 
+    searchPhotos(searchText, amountPhoto).then(photos => {
         showPhotos(photos, divBlock);
     })
 });
 
-document.getElementById("get_more_btn").addEventListener("click", function() {
-    divBlock = document.getElementsByClassName("images")[0];
+document.getElementById("get_more_btn").addEventListener("click", function () {
+    const divBlock = document.getElementsByClassName("images")[0];
+    const searchText = document.getElementById("search_input").value;
+    const amountPhoto = document.getElementById("amount").value;
 
-    searchPhotos().then(photos => { 
+    searchPhotos(searchText, amountPhoto).then(photos => {
         showPhotos(photos, divBlock)
     })
 });
 
-document.getElementById("back").addEventListener("click", function() {
+document.getElementById("back").addEventListener("click", function () {
     window.location.reload();
 });
 
